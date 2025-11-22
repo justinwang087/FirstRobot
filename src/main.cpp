@@ -1,10 +1,9 @@
 #include "main.h"
 #include "lemlib/api.hpp" // IWYU pragma: keep
 #include "pros/misc.h"
+#include "RobotConfig.hpp"
 
 
-pros::MotorGroup left_motors({-1, 2, 4}, pros::MotorGearset::blue); // left motors on 
-pros::MotorGroup right_motors({-7,8,-10 }, pros::MotorGearset::blue); // right motors on ports 14
 pros::Motor intake(3); //intake
 pros::Motor outake(9); //outake
 pros::adi::DigitalOut lifter('G');
