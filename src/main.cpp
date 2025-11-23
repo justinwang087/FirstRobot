@@ -2,84 +2,7 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep
 #include "pros/misc.h"
 #include "RobotConfig.hpp"
-
-
-pros::Motor intake(3); //intake
-pros::Motor outake(9); //outake
-pros::adi::DigitalOut lifter('G');
-pros::adi::DigitalOut lOut('A');
-pros::adi::DigitalOut rOut('B');
-pros::adi::DigitalOut loader('C');
-
-
-pros::Rotation verticalEnc(7);
-lemlib::TrackingWheel vertical(&verticalEnc, lemlib:: Omniwheel::NEW_2, +2);
-
-pros::Rotation horizontalEnc(8);
-lemlib::TrackingWheel horizontal(&horizontalEnc, lemlib:: Omniwheel::NEW_2, +6);
-// drivetrain settings
-lemlib::Drivetrain drivetrain(&left_motors, // left motor group
-                              &right_motors, // right motor group
-                              11, // 10.25 inch track width
-                              lemlib::Omniwheel::NEW_325, // using new 4" omnis
-                              600, // drivetrain rpm is 360
-                              8 // horizontal drift is 2 (for now)
-);
-
-pros::Imu imu(7);
-lemlib::OdomSensors sensors(
-                            &vertical, // vertical tracking wheel 1, set to null
-                            nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
-                            &horizontal, // horizontal tracking wheel 1
-                            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
-                            &imu // inertial sensor
-);
-
-// lateral PID controller
-lemlib::ControllerSettings lateral_controller(7.8, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              41, // derivative gain (kD)
-                                              0, // anti windup
-                                              0, // small error range, in inches
-                                              0, // small error range timeout, in milliseconds
-                                              0, // large error range, in inches
-                                              0, // large error range timeout, in milliseconds
-                                              0 // maximum acceleration (slew)
-);
-
-// angular PID controller
-lemlib::ControllerSettings angular_controller(4.2679981, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              33.2261, // derivative gain (kD)
-                                              0, // anti windup
-                                              0, // small error range, in degrees
-                                              0, // small error range timeout, in milliseconds
-                                              0, // large error range, in degrees
-                                              0, // large error range timeout, in milliseconds
-                                              0 // maximum acceleration (slew)
-);
-
-// create the chassis
-// input curve for throttle input during driver control
-lemlib::ExpoDriveCurve throttle_curve(3, // joystick deadband out of 127
-                                     10, // minimum output where drivetrain will move out of 127
-                                     1.019 // expo curve gain
-);
-
-// input curve for steer input during driver control
-lemlib::ExpoDriveCurve steer_curve(3, // joystick deadband out of 127
-                                  10, // minimum output where drivetrain will move out of 127
-                                  1.019 // expo curve gain
-);
-
-// create the chassis
-lemlib::Chassis chassis(drivetrain,
-                        lateral_controller,
-                        angular_controller,
-                        sensors,
-                        &throttle_curve, 
-                        &steer_curve
-);
+#include "autons.hpp"
 
 void on_center_button() {
 
@@ -152,21 +75,7 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-	pros::lcd::print(1, "justin is a goober");
-    //chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    //chassis.setPose(51.064,1.31,-57.72);
-    //intake.move(127);
-    //chassis.moveToPoint(18,  23, 1000, {.minSpeed = 75});
-    //pros::delay(1000);
-    //chassis.turnToHeading(-170,1000);
-    //chassis.moveToPoint(15 ,8, 1000);
-   // pros::delay(1000);
-    //intake.move(-127);
-    //chassis.moveToPoint(22,  20, 1000, {.forwards = false})
-    //chassis.turnToHeading(-184, 1000);
-    //pros::delay(2000);
-    //chassis.moveToPose(24, -48, 180, 1000, {.lead = 2, .minSpeed = 75});
-   
+    BlueAwp();
 }
 
 
@@ -187,6 +96,14 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 void opcontrol() {
 
+    bool lifterS = true;
+    bool loaderS = true;
+    bool rightS = true;
+    bool leftS = true;
+
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+    intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    outake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     chassis.setPose(48,24, 0);
     // loop forever
     while (true) {
@@ -206,7 +123,25 @@ void opcontrol() {
 			intake.move(0);
             outake.move(0);
 		}
-			
+		
+        if(controller.get_digital(DIGITAL_R1)){
+            lifterS=!lifterS;
+            lifter.set_value(lifterS);
+            //toggle raise and lower jar (lifter)
+        }
+        if(controller.get_digital(DIGITAL_R2)){
+            loader.set_value(loaderS);
+            //toggle scoopy (loader)
+        }
+        if(controller.get_digital(DIGITAL_X)){
+            rOut.set_value(rightS);
+            //hold right side open, default close
+        }
+        if(controller.get_digital(DIGITAL_A)){
+            lOut.set_value(leftS);
+            //hold left side open, default close
+        }
+
 		
         // drive
         chassis.arcade(leftY, -rightX);
