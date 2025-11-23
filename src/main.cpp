@@ -76,11 +76,12 @@ void competition_initialize() {
  */
 void autonomous() {
     BlueAwp();
+    //BlueSide();
 }
 
 
 /**
- * Runs the operator control code. This function will be started in its own task
+ * Runs the `erator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
  * control mode.
@@ -96,6 +97,8 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 void opcontrol() {
 
+    chassis.setPose(48,0,180);
+
     bool lifterS = true;
     bool loaderS = true;
     bool rightS = true;
@@ -104,7 +107,6 @@ void opcontrol() {
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     outake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    chassis.setPose(48,24, 0);
     // loop forever
     while (true) {
         // stick pos.

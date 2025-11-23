@@ -1,8 +1,8 @@
 #include "RobotConfig.hpp"
 #include "api.h"
 
-pros::MotorGroup left_motors ({-1, 2, 4}, pros::MotorGearset::blue);
-pros::MotorGroup right_motors ({-7,8}, pros::MotorGearset::blue);
+pros::MotorGroup right_motors ({-1, 2, 4}, pros::MotorGearset::blue);
+pros::MotorGroup left_motors ({-7,8,-10}, pros::MotorGearset::blue);
 pros::adi::DigitalOut lifter('G');
 pros::adi::DigitalOut lOut('A');
 pros::adi::DigitalOut rOut('B');
@@ -21,11 +21,11 @@ lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group
                               11, // 10.25 inch track width
                               lemlib::Omniwheel::NEW_325, // using new 4" omnis
-                              600, // drivetrain rpm is 360
+                              360, // drivetrain rpm is 360
                               8 // horizontal drift is 2 (for now)
 );
 
-pros::Imu imu(7);
+pros::Imu imu(6);
 lemlib::OdomSensors sensors(
                             nullptr, // vertical tracking wheel 1, set to null
                             nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs

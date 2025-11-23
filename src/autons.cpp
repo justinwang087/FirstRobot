@@ -2,14 +2,19 @@
 #include "RobotConfig.hpp"
 #include "lemlib/asset.hpp"
 #include "lemlib/util.hpp"
+#include "pros/motors.h"
 
 ASSET(MTTB_txt);
 void BlueAwp(){
+    loader.set_value(true);
+
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
-    chassis.setPose(48,0,0);
+    chassis.setPose(48.43,-15,180);
 
     //move to loader
-    chassis.moveToPose(72,-48,0,1000,{.lead = 0.3});
+    loader.set_value(false);
+    chassis.moveToPose(67.2,-40.18,90,15000,{.lead = 0.55, .minSpeed = 40});
     intake.move(127);
     pros::delay(500);
     loader.set_value(true);
@@ -17,49 +22,10 @@ void BlueAwp(){
     lOut.set_value(true);
     rOut.set_value(true);
     chassis.waitUntilDone();
-    pros::delay(750);
 
-    //move to long goal
-    chassis.moveToPose(24,-48,180,1000, {.forwards = false});
-    chassis.waitUntil(2);
-    loader.set_value(false);
-    chassis.waitUntilDone();
-    lOut.set_value(false);
-    rOut.set_value(true);
-    pros::delay(1250);
-
-    //move back
-    chassis.moveToPoint(36, -48, 100, {.minSpeed=40, .earlyExitRange=4});
-    pros::delay(250);
-    lifter.set_value(false);
-    lOut.set_value(true);
-    rOut.set_value(true);
-
-    //move to pos to get to a good pos to get the 3 balls neat the top mid goal
-    chassis.follow(MTTB_txt, 15, 1000);
-    intake.move(127);
-
-    //turn 180 to long goal
-    chassis.turnToHeading(135,1000);
+     //move to long goal
+    chassis.moveToPose(35.06,-40.34,90,1000, {.forwards = false, .minSpeed = 50});
     
-    //move to long goal and a bit forward
-    chassis.moveToPose(12,-2, 135, 1000, {.forwards = false});
-    lifter.set_value(true);
-    rOut.set_value(false);
-
-    chassis.moveToPose(12,-12, 135, 1000);
-    
-    //collect the three balls and move to other loader
-    lifter.set_value(false);
-    intake.move(127);
-    loader.set_value(false);
-    chassis.moveToPose(72, 48,90, 1000,{.lead = 0.8});
-    loader.set_value(true);
-
-    //go to final long goal
-    chassis.moveToPose(24,72, 90, 1000, {.forwards = false});
-
-
 }
 
 void BlueAccomdationB(){
