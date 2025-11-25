@@ -4,9 +4,9 @@
 pros::MotorGroup right_motors ({-1, 2, 4}, pros::MotorGearset::blue);
 pros::MotorGroup left_motors ({-7,8,-10}, pros::MotorGearset::blue);
 pros::adi::DigitalOut lifter('G');
-pros::adi::DigitalOut lOut('A');
-pros::adi::DigitalOut rOut('B');
-pros::adi::DigitalOut loader('C');
+pros::adi::DigitalOut lOut('B');
+pros::adi::DigitalOut rOut('C');
+pros::adi::DigitalOut loader('A');
 pros::Motor intake(3); //intake
 pros::Motor outake(9); //outake
 

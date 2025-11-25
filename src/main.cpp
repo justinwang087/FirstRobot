@@ -99,10 +99,10 @@ void opcontrol() {
 
     chassis.setPose(48,0,180);
 
-    bool lifterS = true;
-    bool loaderS = true;
-    bool rightS = true;
-    bool leftS = true;
+    bool lifterS = false;
+    bool loaderS = false;
+    bool rightS = false;
+
 
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -126,27 +126,32 @@ void opcontrol() {
             outake.move(0);
 		}
 		
-        if(controller.get_digital(DIGITAL_R1)){
+        if(controller.get_digital_new_press(DIGITAL_Y)){
             lifterS=!lifterS;
             lifter.set_value(lifterS);
             //toggle raise and lower jar (lifter)
         }
-        if(controller.get_digital(DIGITAL_R2)){
+        if(controller.get_digital_new_press(DIGITAL_B)){
+            loaderS =!loaderS;
             loader.set_value(loaderS);
-            //toggle scoopy (loader)
+            if(!loaderS){
+            lifterS = true;
+            lifter.set_value(lifterS);
         }
-        if(controller.get_digital(DIGITAL_X)){
+        }
+         //toggle scoopy (loader)
+
+        if(controller.get_digital_new_press(DIGITAL_X)){
+            rightS =! rightS;
             rOut.set_value(rightS);
+            lOut.set_value(rightS);
             //hold right side open, default close
         }
-        if(controller.get_digital(DIGITAL_A)){
-            lOut.set_value(leftS);
-            //hold left side open, default close
-        }
+        
 
 		
         // drive
-        chassis.arcade(leftY, -rightX);
+        chassis.arcade(leftY, rightX);
         
         // delay 
         pros::delay(25);
