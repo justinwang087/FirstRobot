@@ -39,6 +39,8 @@ void initialize() {
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_MAX, 
     TASK_STACK_DEPTH_DEFAULT, "Screen Task");
+    
+    loader.set_value(true);
 }
 
 /**
@@ -97,7 +99,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 void opcontrol() {
 
-    chassis.setPose(48,0,180);
+    chassis.setPose(48.43,-15,180);
 
     bool lifterS = false;
     bool loaderS = false;
@@ -126,7 +128,7 @@ void opcontrol() {
             outake.move(0);
 		}
 		
-        if(controller.get_digital_new_press(DIGITAL_Y)){
+        if(controller.get_digital_new_press(DIGITAL_Y)&&loaderS){
             lifterS=!lifterS;
             lifter.set_value(lifterS);
             //toggle raise and lower jar (lifter)

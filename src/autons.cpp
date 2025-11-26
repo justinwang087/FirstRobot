@@ -6,26 +6,27 @@
 
 ASSET(MTTB_txt);
 void BlueAwp(){
-    loader.set_value(true);
-
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
     chassis.setPose(48.43,-15,180);
 
     //move to loader
+    chassis.moveToPose(67.2,-36.18,90,15000,{.lead = 0.55, .minSpeed = 40});
+    intake.move(-127);
+    chassis.moveToPose(70.2, -36.18, 90, 1000,{.minSpeed = 60});
+    pros::delay(5000);
     loader.set_value(false);
-    chassis.moveToPose(67.2,-40.18,90,15000,{.lead = 0.55, .minSpeed = 40});
-    intake.move(127);
-    pros::delay(500);
-    loader.set_value(true);
-    lifter.set_value(true);
     lOut.set_value(true);
     rOut.set_value(true);
+    lifter.set_value(true);
     chassis.waitUntilDone();
 
      //move to long goal
-    chassis.moveToPose(35.06,-40.34,90,1000, {.forwards = false, .minSpeed = 50});
-    
+    chassis.moveToPose(32.06,-37.34,90,1000, {.forwards = false, .minSpeed = 50});
+    intake.move(-127);
+    outake.move(-127);
+    pros::delay(2000);
+
 }
 
 void BlueAccomdationB(){
