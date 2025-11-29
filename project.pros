@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "BlueAwp",
+    "project_name": "side1",
     "target": "v5",
     "templates": {
       "LemLib": {

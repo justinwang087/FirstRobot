@@ -1,8 +1,11 @@
 #include "main.h"
 #include "lemlib/api.hpp" // IWYU pragma: keep
+#include "outtake.hpp"
 #include "pros/misc.h"
 #include "RobotConfig.hpp"
 #include "autons.hpp"
+#include "outtake.hpp"
+#include "pros/rtos.h"
 
 void on_center_button() {
 
@@ -37,8 +40,10 @@ void initialize() {
     //     
     // });
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_MAX, 
+    pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
     TASK_STACK_DEPTH_DEFAULT, "Screen Task");
+    pros::Task outakxne_task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
+    TASK_STACK_DEPTH_DEFAULT, "Conveyor");
     
     loader.set_value(true);
 }
@@ -77,7 +82,8 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    BlueAwp();
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+    side1();
     //BlueSide();
 }
 
@@ -99,6 +105,8 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 void opcontrol() {
 
+    convSpeed=0;
+
     chassis.setPose(48.43,-15,180);
 
     bool lifterS = false;
@@ -117,15 +125,15 @@ void opcontrol() {
 		
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
 			intake.move(127);
-            outake.move(127);
+            convSpeed=127;
 		}
 		else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
 			intake.move(-127);
-            outake.move(-127);
+            convSpeed=-127;
 		}
 		else{
 			intake.move(0);
-            outake.move(0);
+            convSpeed=0;
 		}
 		
         if(controller.get_digital_new_press(DIGITAL_Y)){
@@ -136,7 +144,10 @@ void opcontrol() {
         if(controller.get_digital_new_press(DIGITAL_B)){
             loaderS =!loaderS;
             loader.set_value(loaderS);
-           
+           if(!loaderS){
+            lifterS = true;
+            lifter.set_value(lifterS);
+        }
         }
          //toggle scoopy (loader)
 

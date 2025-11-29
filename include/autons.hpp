@@ -1,7 +1,7 @@
 #pragma once
 
-void BlueAwp();
-void RedAwp();
+void side1();
+void side2();
 
 void BlueSide();
 void RedSide();

@@ -19,8 +19,8 @@ pros::Motor outake(9); //outake
 // drivetrain settings
 lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group
-                              11, // 10.25 inch track width
-                              lemlib::Omniwheel::NEW_325, // using new 4" omnis
+                              10.25, // 10.25 inch track width
+                              lemlib::Omniwheel::NEW_325, 
                               360, // drivetrain rpm is 360
                               8 // horizontal drift is 2 (for now)
 );
