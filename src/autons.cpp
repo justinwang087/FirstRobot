@@ -27,6 +27,8 @@ void BlueAwp(){
     outake.move(-127);
     pros::delay(2000);
 
+    
+
 }
 
 void BlueAccomdationB(){

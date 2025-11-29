@@ -128,7 +128,7 @@ void opcontrol() {
             outake.move(0);
 		}
 		
-        if(controller.get_digital_new_press(DIGITAL_Y)&&loaderS){
+        if(controller.get_digital_new_press(DIGITAL_Y)){
             lifterS=!lifterS;
             lifter.set_value(lifterS);
             //toggle raise and lower jar (lifter)
@@ -136,10 +136,7 @@ void opcontrol() {
         if(controller.get_digital_new_press(DIGITAL_B)){
             loaderS =!loaderS;
             loader.set_value(loaderS);
-            if(!loaderS){
-            lifterS = true;
-            lifter.set_value(lifterS);
-        }
+           
         }
          //toggle scoopy (loader)
 
