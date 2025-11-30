@@ -45,7 +45,7 @@ void initialize() {
     pros::Task outakxne_task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
     TASK_STACK_DEPTH_DEFAULT, "Conveyor");
     
-    loader.set_value(true);
+    // loader.set_value(true);
 }
 
 /**
@@ -110,7 +110,7 @@ void opcontrol() {
     chassis.setPose(48.43,-15,180);
 
     bool lifterS = false;
-    bool loaderS = false;
+    bool loaderS = true;
     bool rightS = false;
 
 
@@ -136,18 +136,18 @@ void opcontrol() {
             convSpeed=0;
 		}
 		
-        if(controller.get_digital_new_press(DIGITAL_Y)){
+        if(loaderS){
+            lifterS=true;
+            lifter.set_value(lifterS);
+        }else if(controller.get_digital_new_press(DIGITAL_Y)){
             lifterS=!lifterS;
             lifter.set_value(lifterS);
             //toggle raise and lower jar (lifter)
         }
+
         if(controller.get_digital_new_press(DIGITAL_B)){
             loaderS =!loaderS;
             loader.set_value(loaderS);
-           if(!loaderS){
-            lifterS = true;
-            lifter.set_value(lifterS);
-        }
         }
          //toggle scoopy (loader)
 
