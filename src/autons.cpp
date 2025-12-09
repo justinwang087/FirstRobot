@@ -9,22 +9,27 @@ ASSET(MTTB_txt);
 void side1(){
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
-    chassis.setPose(48.43,-15,180);
+    chassis.setPose(48.43,-15.5,180);
 
     //move to loader
-    chassis.moveToPose(65.2,-34.35,90,15000,{.lead = 0.6,.maxSpeed=90, .minSpeed = 20});
+    chassis.moveToPose(65.2,-36.35,90,15000,{.lead = 0.6,.maxSpeed=90, .minSpeed = 20});
+    loader.set_value(true);
     intake.move(-127);
     convSpeed=-127;
-    chassis.moveToPose(73.2, -34.35, 90, 1000,{.minSpeed = 10});
+    chassis.moveToPose(73.2, -36.35, 90, 1000,{.minSpeed = 10});
     loading = true;
     pros::delay(3000);
-    loader.set_value(false);
     lifter.set_value(true);
     chassis.waitUntilDone();
 
      //move to long goal
-    chassis.moveToPose(32.06,-35.34,90,1000, {.forwards = false, .minSpeed = 50});
-    pros::delay(1200);
+    chassis.moveToPose(31.06,-36.84,90,1000, {.forwards = false, .minSpeed = 50});
+    pros::delay(700);
+    loader.set_value(false);
+    pros::delay(300);
+    intake.move(127);
+    // convSpeed=127;
+    pros::delay(200);
     lOut.set_value(true);
     rOut.set_value(true);
     loading = false;
@@ -36,6 +41,7 @@ void side1(){
     
 
 }
+
 
 void BlueAccomdationB(){
     //start pos
@@ -159,6 +165,7 @@ void side2(){
 
     //move to loader
     chassis.moveToPose(65.2,38.65,90,15000,{.lead = 0.6,.maxSpeed=90, .minSpeed = 20});
+    loader.set_value(true);
     intake.move(-127);
     convSpeed=-127;
     chassis.moveToPose(73.2, 38.65, 90, 1000,{.minSpeed = 10});
@@ -179,6 +186,10 @@ void side2(){
     pros::delay(2250);
     intake.move(0);
     convSpeed=-0;
-    
+}
+
+void henryhelp() {
+    chassis.setPose(0,0,0);
+    chassis.moveToPoint(0, 3, 500, {.minSpeed=40});
 
 }

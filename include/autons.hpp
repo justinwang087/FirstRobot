@@ -11,3 +11,5 @@ void RedAccomdationT();
 
 void BlueAccomdationB();
 void RedAccomdationB();
+
+void henryhelp();
