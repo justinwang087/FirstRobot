@@ -10,9 +10,9 @@ extern pros::MotorGroup right_motors; //right motor group
 extern pros::Motor intake; //intake
 extern pros::Motor outake; //outake
 extern pros::adi::DigitalOut lifter;
-extern pros::adi::DigitalOut lOut;
-extern pros::adi::DigitalOut rOut;
+extern pros::adi::DigitalOut Out;
 extern pros::adi::DigitalOut loader;
+extern pros::adi::DigitalOut descore;
 extern pros::Rotation horizontalEnc;
 
 extern lemlib::Drivetrain drivetrain;

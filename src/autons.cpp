@@ -30,8 +30,8 @@ void side1(){
     intake.move(127);
     // convSpeed=127;
     pros::delay(200);
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
+    
     loading = false;
     intake.move(-127);
     convSpeed=-127;
@@ -47,8 +47,8 @@ void BlueAccomdationB(){
     //start pos
     chassis.setPose(48,0,0);
     lifter.set_value(false);
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
+    
 
     //move to goal
     chassis.moveToPoint(36, -60, 1250, {.minSpeed = 55, .earlyExitRange=2});
@@ -74,7 +74,7 @@ void BlueAccomdationB(){
     //move to goal
     chassis.moveToPose(12,-2, 135, 1000, {.forwards = false});
     lifter.set_value(true);
-    rOut.set_value(false);
+    Out.set_value(false);
 }
 
 void BlueAccomdationT() {
@@ -82,8 +82,8 @@ void BlueAccomdationT() {
     chassis.setPose(48,0,0);
     loader.set_value(true);
     lifter.set_value(false);
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
+    
 
     //move to goal
     chassis.moveToPose(36,48, 325,1000);
@@ -101,8 +101,7 @@ void BlueAccomdationT() {
 
     //turn to long goal and score
     lifter.set_value(true);
-    lOut.set_value(true);
-    rOut.set_value(false);
+    Out.set_value(false);
     chassis.moveToPose(3,-5,250, 1000,{.lead = 0.3, .minSpeed = 50});
 
 }
@@ -113,8 +112,7 @@ void BlueSide() {
     chassis.setPose(48,0,0);
     loader.set_value(true);
     lifter.set_value(false);
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
     
      //move to loader
     chassis.moveToPose(72,-48,0,1000,{.lead = 0.3});
@@ -122,8 +120,7 @@ void BlueSide() {
     pros::delay(500);
     loader.set_value(true);
     lifter.set_value(true);
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
     chassis.waitUntilDone();
     pros::delay(750);
 
@@ -132,16 +129,16 @@ void BlueSide() {
     chassis.waitUntil(2);
     loader.set_value(false);
     chassis.waitUntilDone();
-    lOut.set_value(false);
-    rOut.set_value(true);
+    Out.set_value(false);
+    
     pros::delay(1250);
 
     //move back
     chassis.moveToPoint(36, -48, 100, {.minSpeed=40, .earlyExitRange=4});
     pros::delay(250);
     lifter.set_value(false);
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
+    
 
     //move to pos to get to a good pos to get the 3 balls neat the top mid goal
     chassis.follow(MTTB_txt, 15, 1000);
@@ -153,8 +150,7 @@ void BlueSide() {
     //move to long goal and a bit forward
     chassis.moveToPose(12,-2, 135, 1000, {.forwards = false});
     lifter.set_value(true);
-    rOut.set_value(false);
-
+    Out.set_value(false);
     chassis.moveToPose(12,-12, 135, 1000);
 }
 
@@ -178,8 +174,7 @@ void side2(){
      //move to long goal
     chassis.moveToPose(34.36,38.84,90,1250, {.forwards = false, .minSpeed = 50});
     chassis.waitUntilDone();
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
     loading = false;
     intake.move(-127);
     convSpeed=-127;

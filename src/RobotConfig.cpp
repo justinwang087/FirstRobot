@@ -3,10 +3,10 @@
 
 pros::MotorGroup right_motors ({-1, 2, 4}, pros::MotorGearset::blue);
 pros::MotorGroup left_motors ({-7,8,-10}, pros::MotorGearset::blue);
-pros::adi::DigitalOut lifter('G');
-pros::adi::DigitalOut lOut('B');
-pros::adi::DigitalOut rOut('C');
+pros::adi::DigitalOut lifter('D');
+pros::adi::DigitalOut Out('G');
 pros::adi::DigitalOut loader('A');
+pros::adi::DigitalOut descore('C');
 pros::Motor intake(3); //intake
 pros::Motor outake(9); //outake
 
@@ -67,8 +67,8 @@ lemlib::ExpoDriveCurve throttle_curve(3, // joystick deadband out of 127
 
 // input curve for steer input during driver control
 lemlib::ExpoDriveCurve steer_curve(3, // joystick deadband out of 127
-                                  10, // minimum output where drivetrain will move out of 127
-                                  1.25 // expo curve gain
+                                  25, // minimum output where drivetrain will move out of 127
+                                  1.125 // expo curve gain
 );
 
 // create the chassis
