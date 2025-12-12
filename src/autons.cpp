@@ -30,8 +30,8 @@ void side1(){
     intake.move(127);
     // convSpeed=127;
     pros::delay(200);
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
+    
     loading = false;
     intake.move(-127);
     convSpeed=-127;
@@ -62,8 +62,7 @@ void side2(){
      //move to long goal
     chassis.moveToPose(34.36,38.84,90,1250, {.forwards = false, .minSpeed = 50});
     chassis.waitUntilDone();
-    lOut.set_value(true);
-    rOut.set_value(true);
+    Out.set_value(true);
     loading = false;
     intake.move(-127);
     convSpeed=-127;
@@ -83,6 +82,5 @@ void middle1() {
     lifter.set_value(false);
 
     intake.move(127);
-    chassis.move()
     
 }

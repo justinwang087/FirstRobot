@@ -28,6 +28,7 @@ void screenTask(void* param){
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+    descore.set_value(true);
     lifter.set_value(true);
     pros::lcd::initialize(); // initialize brain screen
     chassis.calibrate(); // calibrate sensors
@@ -83,8 +84,10 @@ void competition_initialize() {
  */
 void autonomous() {
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    side1();
+    // side1();
     //BlueSide();
+    chassis.setPose(0,0,0);
+    chassis.moveToPose(0, 25, 0, 5000);
 }
 
 
@@ -110,8 +113,9 @@ void opcontrol() {
     chassis.setPose(48.43,-15,180);
 
     bool lifterS = false;
-    bool loaderS = true;
-    bool rightS = false;
+    bool loaderS = false;
+    bool OutS = false;
+    bool descoreS = false;
 
 
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
@@ -152,12 +156,15 @@ void opcontrol() {
          //toggle scoopy (loader)
 
         if(controller.get_digital_new_press(DIGITAL_X)){
-            rightS =! rightS;
-            rOut.set_value(rightS);
-            lOut.set_value(rightS);
+            OutS =! OutS;
+            Out.set_value(OutS);
             //hold right side open, default close
         }
-        
+        if (controller.get_digital_new_press(DIGITAL_A)) {
+            descoreS = !descoreS;
+            descore.set_value(descoreS);
+            //toggle descore piston
+        }
 
 		
         // drive
