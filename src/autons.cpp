@@ -11,11 +11,11 @@ void side1(){
     //start pos 
     pros::delay(1000);
     chassis.setPose(48.43,-17,180);
-    chassis.moveToPose(48,-44,180,1000);
+    chassis.moveToPose(48,-46,180,1000);
     loader.set_value(true);
-    chassis.moveToPose(48,-44,90,1000);
+    chassis.turnToPoint(67, -46, 1000);
     intake.move(-127);
-    chassis.moveToPose(67,-44,90,500, {.minSpeed = 50});
+    chassis.moveToPose(67,-46,90,500, {.minSpeed = 50});
     convSpeed = -127;
     Out.set_value(true);
 
