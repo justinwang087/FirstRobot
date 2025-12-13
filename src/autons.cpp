@@ -5,40 +5,19 @@
 #include "pros/motors.h"
 #include "outtake.hpp"
 
-ASSET(MTTB_txt);
+
 void side1(){
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
-    chassis.setPose(48.43,-15.5,180);
-
-    //move to loader
-    chassis.moveToPose(65.2,-36.35,90,15000,{.lead = 0.6,.maxSpeed=90, .minSpeed = 20});
+    pros::delay(1000);
+    chassis.setPose(48.43,-17,180);
+    chassis.moveToPose(48,-44,180,1000);
     loader.set_value(true);
+    chassis.moveToPose(48,-44,90,1000);
     intake.move(-127);
-    convSpeed=-127;
-    chassis.moveToPose(73.2, -36.35, 90, 1000,{.minSpeed = 10});
-    loading = true;
-    pros::delay(3000);
-    lifter.set_value(true);
-    chassis.waitUntilDone();
-
-     //move to long goal
-    chassis.moveToPose(31.06,-36.84,90,1000, {.forwards = false, .minSpeed = 50});
-    pros::delay(700);
-    loader.set_value(false);
-    pros::delay(300);
-    intake.move(127);
-    // convSpeed=127;
-    pros::delay(200);
+    chassis.moveToPose(67,-44,90,500, {.minSpeed = 50});
+    convSpeed = -127;
     Out.set_value(true);
-    
-    loading = false;
-    intake.move(-127);
-    convSpeed=-127;
-    pros::delay(2250);
-    intake.move(0);
-    convSpeed=-0;
-    
 
 }
 
@@ -78,9 +57,13 @@ void henryhelp() {
 }
 
 void middle1() {
-    chassis.setPose(-48,12,90);
+    chassis.setPose(48,-12,90);
     lifter.set_value(false);
+    loader.set_value(false);
 
-    intake.move(127);
+
+    intake.move(-127);
+    chassis.moveToPose(24,-12, 90, 1000, {.lead = 4, .minSpeed = 20});
+
     
 }
