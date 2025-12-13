@@ -7,6 +7,9 @@
 #include "outtake.hpp"
 #include "pros/rtos.h"
 
+pros::Task* screen_task = nullptr;
+pros::Task* outake_task = nullptr;
+
 void on_center_button() {
 
 }
@@ -41,9 +44,9 @@ void initialize() {
     //     
     // });
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
+    screen_task = new pros::Task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
     TASK_STACK_DEPTH_DEFAULT, "Screen Task");
-    pros::Task outakxne_task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
+    outake_task = new pros::Task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
     TASK_STACK_DEPTH_DEFAULT, "Conveyor");
     
     // loader.set_value(true);
