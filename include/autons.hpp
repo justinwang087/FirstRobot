@@ -3,6 +3,8 @@
 void side1();
 void side2();
 
+void skills();
+
 void BlueSide();
 void RedSide();
 

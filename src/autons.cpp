@@ -9,45 +9,69 @@
 void side1(){
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
-    pros::delay(1000);
-    chassis.setPose(48.43,-17,180);
-    chassis.moveToPose(48,-46,180,1000);
-    loader.set_value(true);
-    chassis.turnToPoint(67, -46, 1000);
-    intake.move(-127);
-    chassis.moveToPose(67,-46,90,500, {.minSpeed = 50});
-    convSpeed = -127;
     Out.set_value(true);
+    chassis.setPose(48.43,-17,180);
+    chassis.moveToPose(48,-46.5,180,2000);
+    loader.set_value(true);
+    chassis.turnToPoint(67, -46, 1500);
+    intake.move(-127);
+    convSpeed = -127;
+    chassis.moveToPose(65,-46,90,3000, {.minSpeed = 50});
+    chassis.waitUntilDone();
+    pros::delay(750);
+
+    chassis.moveToPose(27,-46,90,1000, {.forwards = false, .minSpeed = 30});
+    chassis.waitUntilDone();
+    Out.set_value(false);
+    
 
 }
 
 void side2(){
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
-    chassis.setPose(48.43,15,0);
-
-    //move to loader
-    chassis.moveToPose(65.2,38.65,90,15000,{.lead = 0.6,.maxSpeed=90, .minSpeed = 20});
-    loader.set_value(true);
-    intake.move(-127);
-    convSpeed=-127;
-    chassis.moveToPose(73.2, 38.65, 90, 1000,{.minSpeed = 10});
-    loading = true;
-    pros::delay(2000);
-    loader.set_value(false);
-    lifter.set_value(true);
-    chassis.waitUntilDone();
-
-     //move to long goal
-    chassis.moveToPose(34.36,38.84,90,1250, {.forwards = false, .minSpeed = 50});
-    chassis.waitUntilDone();
     Out.set_value(true);
-    loading = false;
+    chassis.setPose(48.43,17,0);
+    chassis.moveToPose(48,45,0,2000);
+    loader.set_value(true);
+    chassis.turnToPoint(67, 46, 1500);
     intake.move(-127);
-    convSpeed=-127;
+    convSpeed = -127;
+    chassis.moveToPoint(60.5,46,3000);
+    chassis.waitUntilDone();
+    pros::delay(750);
+
+chassis.moveToPose(27.5,48,90,1000, {.forwards = false, .minSpeed = 30});
+    chassis.waitUntilDone();
+    Out.set_value(false);
+    
+}
+
+void skills() {
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+    //start pos 
+    Out.set_value(true);
+    chassis.setPose(48.43,17,0);
+    chassis.moveToPose(48,45,0,2000);
+    loader.set_value(true);
+    chassis.turnToPoint(67, 46, 1500);
+    intake.move(-127);
+    convSpeed = -127;
+    chassis.moveToPoint(60.5,46,3000);
+    chassis.waitUntilDone();
     pros::delay(2250);
+
+chassis.moveToPose(27.5,48,90,1000, {.forwards = false, .minSpeed = 30});
+    chassis.waitUntilDone();
+    Out.set_value(false);
+    pros::delay(3500);
+    chassis.moveToPoint(48, 48, 1250);
+    loader.set_value(false);
+    convSpeed=0;
     intake.move(0);
-    convSpeed=-0;
+    chassis.turnToPoint(60.5, 0, 1500);
+    chassis.moveToPose(60.5, 0, 180, 2500, {.minSpeed=127});
+    chassis.moveToPoint(60.5, -18, 2500, {.minSpeed=127});
 }
 
 void henryhelp() {
