@@ -35,18 +35,18 @@ void initialize() {
     lifter.set_value(true);
     pros::lcd::initialize(); // initialize brain screen
     chassis.calibrate(); // calibrate sensors
-    // pros::Task screen_task([&](){
+    // pros::Task screen_task([=](){
     //     while (true){
     //         pros::lcd::print(3, "X: %f", chassis.getPose().x);
     //         pros::lcd::print(4, "Y: %f", chassis.getPose().y);
     //         pros::lcd::print(5, "Theta: %f", chassis.getPose().theta);
     //         pros::delay(20);
-    //     
+    //     }
     // });
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    screen_task = new pros::Task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
-    TASK_STACK_DEPTH_DEFAULT, "Screen Task");
-    outake_task = new pros::Task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
+    // pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
+    // TASK_STACK_DEPTH_DEFAULT, "Screen Task");
+    pros::Task outakxne_task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
     TASK_STACK_DEPTH_DEFAULT, "Conveyor");
     
     // loader.set_value(true);
@@ -87,10 +87,8 @@ void competition_initialize() {
  */
 void autonomous() {
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    // side1();
-    //BlueSide();
-    chassis.setPose(0,0,0);
-    chassis.moveToPose(0, 25, 0, 5000);
+    
+    side1();
 }
 
 
@@ -113,7 +111,7 @@ void opcontrol() {
 
     convSpeed=0;
 
-    chassis.setPose(48.43,-15,180);
+    chassis.setPose(48,0,0);
 
     bool lifterS = false;
     bool loaderS = false;
@@ -121,6 +119,8 @@ void opcontrol() {
     bool descoreS = false;
 
 
+    
+    // main operator control loop: handle controller and periodically print posez
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     outake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
