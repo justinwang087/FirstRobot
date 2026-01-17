@@ -32,7 +32,6 @@ void screenTask(void* param){
  */
 void initialize() {
     descore.set_value(true);
-    lifter.set_value(true);
     pros::lcd::initialize(); // initialize brain screen
     chassis.calibrate(); // calibrate sensors
     // pros::Task screen_task([=](){
@@ -87,8 +86,6 @@ void competition_initialize() {
  */
 void autonomous() {
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    
-    skills();
 
 }
 
@@ -114,9 +111,7 @@ void opcontrol() {
 
     chassis.setPose(48,0,0);
 
-    bool lifterS = false;
     bool loaderS = false;
-    bool OutS = false;
     bool descoreS = false;
 
 
@@ -133,7 +128,7 @@ void opcontrol() {
 		
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
 			intake.move(127);
-            convSpeed=127;
+
 		}
 		else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
 			intake.move(-127);
@@ -143,27 +138,23 @@ void opcontrol() {
 			intake.move(0);
             convSpeed=0;
 		}
-		
-        if(loaderS){
-            lifterS=true;
-            lifter.set_value(lifterS);
-        }else if(controller.get_digital_new_press(DIGITAL_Y)){
-            lifterS=!lifterS;
-            lifter.set_value(lifterS);
-            //toggle raise and lower jar (lifter)
+
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+            outake.move(127);
         }
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+            outake.move(-127); 
+        }
+        else {
+            outake.move(0);
+        }
+		
 
         if(controller.get_digital_new_press(DIGITAL_B)){
             loaderS =!loaderS;
             loader.set_value(loaderS);
         }
-         //toggle scoopy (loader)
 
-        if(controller.get_digital_new_press(DIGITAL_X)){
-            OutS =! OutS;
-            Out.set_value(OutS);
-            //hold right side open, default close
-        }
         if (controller.get_digital_new_press(DIGITAL_A)) {
             descoreS = !descoreS;
             descore.set_value(descoreS);

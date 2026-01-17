@@ -1,22 +1,27 @@
 #include "RobotConfig.hpp"
 #include "api.h"
 
-pros::MotorGroup right_motors ({-1, 2, 4}, pros::MotorGearset::blue);
-pros::MotorGroup left_motors ({-7,8,-10}, pros::MotorGearset::blue);
-pros::adi::DigitalOut lifter('D');
-pros::adi::DigitalOut Out('G');
-pros::adi::DigitalOut loader('A');
+pros::MotorGroup right_motors ({-1, 4, 6}, pros::MotorGearset::blue);
+pros::MotorGroup left_motors ({-5,7,-8}, pros::MotorGearset::blue);
+pros::adi::DigitalOut loader('F');
 pros::adi::DigitalOut descore('C');
-pros::Motor intake(3); //intake
+pros::Rotation horizontal_sensor (-11);
+pros::Rotation vertical_sensor (-13);
+pros::Imu imu(3);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_275, -8);
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_sensor, lemlib::Omniwheel::NEW_275, 0);
+
+pros::Motor intake(10); 
 pros::Motor outake(9); //outake
 
 
-//pros::Rotation verticalEnc(7);
-//lemlib::TrackingWheel vertical(&verticalEnc, lemlib:: Omniwheel::NEW_2, +2);
+lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
+                            nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
+                            &horizontal_tracking_wheel, // horizontal tracking wheel 1
+                            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
+                            &imu // inertial sensor
+);
 
-//pros::Rotation horizontalEnc(8);
-//lemlib::TrackingWheel horizontal(&horizontalEnc, lemlib:: Omniwheel::NEW_2, +6);
-// drivetrain settings
 lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group
                               10.25, // 10.25 inch track width
@@ -25,14 +30,6 @@ lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               8 // horizontal drift is 2 (for now)
 );
 
-pros::Imu imu(6);
-lemlib::OdomSensors sensors(
-                            nullptr, // vertical tracking wheel 1, set to null
-                            nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
-                            nullptr, // horizontal tracking wheel 1
-                            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
-                            &imu // inertial sensor
-);
 
 // lateral PID controller
 lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
