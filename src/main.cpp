@@ -1,27 +1,29 @@
 #include "main.h"
 #include "lemlib/api.hpp" // IWYU pragma: keep
+#include "lemlib/chassis/chassis.hpp"
+#include "lemlib/chassis/trackingWheel.hpp"
 #include "outtake.hpp"
 #include "pros/misc.h"
 #include "RobotConfig.hpp"
 #include "autons.hpp"
 #include "outtake.hpp"
 #include "pros/rtos.h"
+#include <math.h>
 
 pros::Task* screen_task = nullptr;
 pros::Task* outake_task = nullptr;
 
-void on_center_button() {
-
-}
-
-
 void screenTask(void* param){
     while (true){
-        pros::lcd::print(3, "X: %f", chassis.getPose().x);
-        pros::lcd::print(4, "Y: %f", chassis.getPose().y);
-        pros::lcd::print(5, "Theta: %f", chassis.getPose().theta);
-        pros::delay(20);
+        pros::lcd::print(1, "X: %f", chassis.getPose().x);
+        pros::lcd::print(2, "Y: %f", chassis.getPose().y);
+        pros::lcd::print(3, "Theta: %f", chassis.getPose().theta);
+        pros::lcd::print(4, "H: %.4f, V: %.4f",
+            horizontal_sensor.get_position()*M_PI*lemlib::Omniwheel::NEW_2/(36000.0),   //distance traveled in inches
+            vertical_sensor.get_position()*M_PI*lemlib::Omniwheel::NEW_2/(36000.0));    //distance traveled in inches
 
+        pros::lcd::print(5, "deg: %f", imu.get_heading());
+        pros::delay(20);
     }
 }
 /**
@@ -43,8 +45,8 @@ void initialize() {
     //     }
     // });
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    // pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
-    // TASK_STACK_DEPTH_DEFAULT, "Screen Task");
+    pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
+    TASK_STACK_DEPTH_DEFAULT, "Screen Task");
     pros::Task outakxne_task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
     TASK_STACK_DEPTH_DEFAULT, "Conveyor");
     
@@ -86,12 +88,13 @@ void competition_initialize() {
  */
 void autonomous() {
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-
+    chassis.turnToHeading(180, 5000, {.direction=lemlib::AngularDirection::CW_CLOCKWISE, .minSpeed=60, .earlyExitRange=5});
+    chassis.turnToHeading(0, 5000, {.direction=lemlib::AngularDirection::CW_CLOCKWISE});
 }
 
 
 /**
- * Runs the `erator control code. This function will be started in its own task
+ * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
  * control mode.
@@ -114,9 +117,6 @@ void opcontrol() {
     bool loaderS = false;
     bool descoreS = false;
 
-
-    
-    // main operator control loop: handle controller and periodically print posez
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     outake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);

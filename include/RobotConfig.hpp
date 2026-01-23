@@ -13,8 +13,10 @@ extern pros::adi::DigitalOut lifter;
 extern pros::adi::DigitalOut Out;
 extern pros::adi::DigitalOut loader;
 extern pros::adi::DigitalOut descore;
-extern pros::Rotation horizontalEnc;
-
+extern pros::Rotation horizontal_sensor;
+extern pros::Rotation vertical_sensor;
+extern pros::Imu imu;
+    
 extern lemlib::Drivetrain drivetrain;
 extern lemlib::TrackingWheel vertical;
 extern lemlib::OdomSensors sensors;
