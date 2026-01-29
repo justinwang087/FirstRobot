@@ -9,7 +9,6 @@
 void side1(){
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
-    Out.set_value(true);
     chassis.setPose(48.43,-17,180);
     chassis.moveToPose(48,-46.5,180,2000);
     loader.set_value(true);
@@ -22,7 +21,6 @@ void side1(){
 
     chassis.moveToPose(27,-46,90,1000, {.forwards = false, .minSpeed = 30});
     chassis.waitUntilDone();
-    Out.set_value(false);
     
 
 }
@@ -30,27 +28,25 @@ void side1(){
 void side2(){
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
-    Out.set_value(true);
     chassis.setPose(48.43,17,0);
-    chassis.moveToPose(48,45,0,2000);
-    loader.set_value(true);
-    chassis.turnToPoint(67, 46, 1500);
-    intake.move(-127);
-    convSpeed = -127;
-    chassis.moveToPoint(60.5,46,3000);
-    chassis.waitUntilDone();
-    pros::delay(750);
+//     chassis.moveToPose(48,45,0,2000);
+//     loader.set_value(true);
+//     chassis.turnToPoint(67, 46, 1500);
+//     intake.move(-127);
+//     convSpeed = -127;
+//     chassis.moveToPoint(60.5,46,3000);
+//     chassis.waitUntilDone();
+//     pros::delay(750);
 
-chassis.moveToPose(27.5,48,90,1000, {.forwards = false, .minSpeed = 30});
-    chassis.waitUntilDone();
-    Out.set_value(false);
+// chassis.moveToPose(27.5,48,90,1000, {.forwards = false, .minSpeed = 30});
+//     chassis.waitUntilDone();
+//     Out.set_value(false);
     
 }
 
 void skills() {
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
-    Out.set_value(true);
     chassis.setPose(48.43,17,0);
     chassis.moveToPose(48,45,0,2000);
     loader.set_value(true);
@@ -63,7 +59,6 @@ void skills() {
 
 chassis.moveToPose(27.5,48,90,1000, {.forwards = false, .minSpeed = 30});
     chassis.waitUntilDone();
-    Out.set_value(false);
     pros::delay(3500);
     chassis.moveToPoint(48, 48, 1250);
     loader.set_value(false);
@@ -82,7 +77,6 @@ void henryhelp() {
 
 void middle1() {
     chassis.setPose(48,-12,90);
-    lifter.set_value(false);
     loader.set_value(false);
 
 

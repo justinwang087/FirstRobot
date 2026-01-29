@@ -33,20 +33,24 @@ void screenTask(void* param){
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-    descore.set_value(true);
     pros::lcd::initialize(); // initialize brain screen
     chassis.calibrate(); // calibrate sensors
-    // pros::Task screen_task([=](){
-    //     while (true){
-    //         pros::lcd::print(3, "X: %f", chassis.getPose().x);
-    //         pros::lcd::print(4, "Y: %f", chassis.getPose().y);
-    //         pros::lcd::print(5, "Theta: %f", chassis.getPose().theta);
-    //         pros::delay(20);
-    //     }
-    // });
+    pros::Task screen_task([=](){
+        while (true){
+            pros::lcd::print(1, "X: %f", chassis.getPose().x);
+            pros::lcd::print(2, "Y: %f", chassis.getPose().y);
+            pros::lcd::print(3, "Theta: %f", chassis.getPose().theta);
+            pros::lcd::print(4, "H: %.4f, V: %.4f",
+                horizontal_sensor.get_position()*M_PI*lemlib::Omniwheel::NEW_2/(36000.0),   //distance traveled in inches
+                vertical_sensor.get_position()*M_PI*lemlib::Omniwheel::NEW_2/(36000.0));    //distance traveled in inches
+
+            pros::lcd::print(5, "deg: %f", imu.get_heading());
+            pros::delay(100);
+        }
+    });
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
-    TASK_STACK_DEPTH_DEFAULT, "Screen Task");
+    // pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
+    // TASK_STACK_DEPTH_DEFAULT, "Screen Task");
     pros::Task outakxne_task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
     TASK_STACK_DEPTH_DEFAULT, "Conveyor");
     
@@ -88,8 +92,9 @@ void competition_initialize() {
  */
 void autonomous() {
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    chassis.turnToHeading(180, 5000, {.direction=lemlib::AngularDirection::CW_CLOCKWISE, .minSpeed=60, .earlyExitRange=5});
-    chassis.turnToHeading(0, 5000, {.direction=lemlib::AngularDirection::CW_CLOCKWISE});
+    chassis.setPose(0,0,0);
+    chassis.turnToHeading(180, 5000,{.direction = lemlib::AngularDirection::CW_CLOCKWISE, .minSpeed=20});
+    chassis.turnToHeading(0, 5000,{.direction = lemlib::AngularDirection::CW_CLOCKWISE});
 }
 
 
@@ -112,7 +117,7 @@ void opcontrol() {
 
     convSpeed=0;
 
-    chassis.setPose(48,0,0);
+    chassis.setPose(24,24,0);
 
     bool loaderS = false;
     bool descoreS = false;
