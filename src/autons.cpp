@@ -4,28 +4,35 @@
 #include "lemlib/util.hpp"
 #include "pros/motors.h"
 #include "outtake.hpp"
+#include "pros/rtos.hpp"
 
-
-void side1(){
-    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    //start pos 
-    chassis.setPose(48.43,-17,180);
-    chassis.moveToPose(48,-46.5,180,2000);
-    loader.set_value(true);
-    chassis.turnToPoint(67, -46, 1500);
-    intake.move(-127);
-    convSpeed = -127;
-    chassis.moveToPose(65,-46,90,3000, {.minSpeed = 50});
-    chassis.waitUntilDone();
-    pros::delay(750);
-
-    chassis.moveToPose(27,-46,90,1000, {.forwards = false, .minSpeed = 30});
-    chassis.waitUntilDone();
-    
-
-}
 
 void side2(){
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+    //start pos 
+
+    chassis.setPose(52,18,0);
+    loader.set_value(true);
+    pros::delay(400);
+    chassis.moveToPose(48,48,0,2000);
+    chassis.turnToPoint(72,48,1100);
+    convSpeed = 127;
+    chassis.moveToPose(72,48,90,1100,{.minSpeed = 80});
+    pros::delay(1300);
+    chassis.moveToPose(25,47,90,2000,{.forwards = false, .lead=0.3, .maxSpeed=65});
+    pros::delay(1500);
+    outake.move(-127);
+    pros::delay(3000);
+    chassis.moveToPoint(48, 48, 1000, {.minSpeed=20, .earlyExitRange=4});
+    descore.set_value(true);
+    chassis.turnToHeading(80, 750, {.minSpeed=20, .earlyExitRange=5});
+    chassis.moveToPose(24, 35.5, 90, 2000, {.forwards=false, .lead=0.25});
+    // chassis.turnToHeading(90, 1000);
+    chassis.moveToPose(6, 35.5, 90, 2000, {.forwards=false, .lead=0.3, .minSpeed=47.5});
+    descore.set_value(false);
+}
+
+void side1(){
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
     //start pos 
     chassis.setPose(48.43,17,0);

@@ -6,11 +6,11 @@ pros::MotorGroup right_motors ({-1, 4, 6}, pros::MotorGearset::blue);
 pros::MotorGroup left_motors ({-5,7,-8}, pros::MotorGearset::blue);
 pros::adi::DigitalOut loader('C');
 pros::adi::DigitalOut descore('F');
-pros::Rotation horizontal_sensor (-11);
-pros::Rotation vertical_sensor (-13);
+pros::Rotation horizontal_sensor (11);
+pros::Rotation vertical_sensor (-17);
 pros::Imu imu(3);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, -5.51871212);
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_sensor, lemlib::Omniwheel::NEW_2, -0.1689936123);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, -7.086864948);
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_sensor, lemlib::Omniwheel::NEW_2, -0.05695700685);
 
 pros::Motor intake(10); 
 pros::Motor outake(9); //outake

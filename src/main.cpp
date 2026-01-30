@@ -37,9 +37,10 @@ void initialize() {
     chassis.calibrate(); // calibrate sensors
     pros::Task screen_task([=](){
         while (true){
-            pros::lcd::print(1, "X: %f", chassis.getPose().x);
-            pros::lcd::print(2, "Y: %f", chassis.getPose().y);
-            pros::lcd::print(3, "Theta: %f", chassis.getPose().theta);
+            lemlib::Pose pose = chassis.getPose();
+            pros::lcd::print(1, "X: %f", pose.x);
+            pros::lcd::print(2, "Y: %f", pose.y);
+            pros::lcd::print(3, "Theta: %f", pose.theta);
             pros::lcd::print(4, "H: %.4f, V: %.4f",
                 horizontal_sensor.get_position()*M_PI*lemlib::Omniwheel::NEW_2/(36000.0),   //distance traveled in inches
                 vertical_sensor.get_position()*M_PI*lemlib::Omniwheel::NEW_2/(36000.0));    //distance traveled in inches
@@ -49,12 +50,9 @@ void initialize() {
         }
     });
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    // pros::Task screen_task(screenTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
-    // TASK_STACK_DEPTH_DEFAULT, "Screen Task");
+    
     pros::Task outakxne_task(conveyor, (void*)"PROS", TASK_PRIORITY_DEFAULT, 
     TASK_STACK_DEPTH_DEFAULT, "Conveyor");
-    
-    // loader.set_value(true);
 }
 
 /**
@@ -91,10 +89,7 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-    chassis.setPose(0,0,0);
-    chassis.turnToHeading(180, 5000,{.direction = lemlib::AngularDirection::CW_CLOCKWISE, .minSpeed=20});
-    chassis.turnToHeading(0, 5000,{.direction = lemlib::AngularDirection::CW_CLOCKWISE});
+    side2();
 }
 
 
@@ -116,8 +111,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 void opcontrol() {
 
     convSpeed=0;
-
-    chassis.setPose(24,24,0);
+    // chassis.setPose(24,24,0);
 
     bool loaderS = false;
     bool descoreS = false;
@@ -132,15 +126,13 @@ void opcontrol() {
         int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 		
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-			intake.move(127);
+			convSpeed=127;
 
 		}
 		else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-			intake.move(-127);
             convSpeed=-127;
 		}
 		else{
-			intake.move(0);
             convSpeed=0;
 		}
 
