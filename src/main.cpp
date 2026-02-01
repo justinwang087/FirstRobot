@@ -89,7 +89,7 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    side2();
+    skills();
 }
 
 
@@ -111,11 +111,10 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 void opcontrol() {
 
     convSpeed=0;
-    // chassis.setPose(24,24,0);
+    chassis.setPose(48,24,0);
 
     bool loaderS = false;
     bool descoreS = false;
-
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     outake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
