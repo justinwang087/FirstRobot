@@ -111,7 +111,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 void opcontrol() {
 
     convSpeed=0;
-    chassis.setPose(48,24,0);
+    chassis.setPose(48,-24,0);
 
     bool loaderS = false;
     bool descoreS = false;
