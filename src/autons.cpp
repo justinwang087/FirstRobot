@@ -60,14 +60,14 @@ void side1(){
 void skills() {
    chassis.setPose(47,-14,-90);
    chassis.turnToHeading(-103,1000);
-   chassis.moveToPose(19.5,-24,-103,1000, {.minSpeed = 60});
+   chassis.moveToPose(19,-24,-103,1000, {.minSpeed = 65});
    intake.move(127);
-   convSpeed = 70;
-   pros::delay(1200);
+   convSpeed = 120;
+   pros::delay(900);
    loader.set_value(true);
    chassis.turnToHeading(-226,1000);
    pros::delay(1000);
-   chassis.moveToPose(13.6,-11,-230,1000, {.forwards=false, .minSpeed =70});
+   chassis.moveToPose(10.5,-10,-218,1000, {.forwards=false, .minSpeed =60});
    pros::delay(750);
    outake.move(127);
    //chassis.moveToPose(-48,49,-226,2000);
