@@ -59,18 +59,25 @@ void side1(){
 
 void skills() {
    chassis.setPose(47,-14,-90);
-   chassis.turnToHeading(-103,1000);
-   chassis.moveToPose(19,-24,-103,1000, {.minSpeed = 65});
+   chassis.turnToHeading(-135,1000);
+   chassis.moveToPose(20.5,-24,-103,1000, {.lead = 0.3, .minSpeed = 55});
    intake.move(127);
-   convSpeed = 120;
-   pros::delay(900);
+   convSpeed = 140;
+   pros::delay(500);
    loader.set_value(true);
-   chassis.turnToHeading(-226,1000);
-   pros::delay(1000);
-   chassis.moveToPose(10.5,-10,-218,1000, {.forwards=false, .minSpeed =60});
+   chassis.turnToHeading(-122,1000);
    pros::delay(750);
+   chassis.moveToPose(9.7,-9.8,-232,1500, { .forwards=false, .lead = 0.43, .minSpeed =55});
+   convSpeed = 80;
+   chassis.waitUntilDone();
    outake.move(127);
-   //chassis.moveToPose(-48,49,-226,2000);
+   pros::delay(650);
+   convSpeed = -127;
+   pros::delay(50);
+   convSpeed = 80;
+   pros::delay(650);
+   chassis.moveToPose(9.7,-12,-232,1500, { .minSpeed = 60});
+
 }
 
 void middle1() {
