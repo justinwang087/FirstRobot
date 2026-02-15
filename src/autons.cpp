@@ -67,17 +67,10 @@ void skills() {
    loader.set_value(true);
    chassis.turnToHeading(-122,1000);
    pros::delay(750);
-   chassis.moveToPose(9.7,-9.8,-232,1500, { .forwards=false, .lead = 0.43, .minSpeed =55});
-   convSpeed = 80;
-   chassis.waitUntilDone();
-   outake.move(127);
-   pros::delay(650);
-   convSpeed = -127;
-   pros::delay(50);
-   convSpeed = 80;
-   pros::delay(650);
-   chassis.moveToPose(9.7,-12,-232,1500, { .minSpeed = 60});
-
+   chassis.moveToPose(11.2,-12,-239,1500, { .forwards=false, .lead = 0.43, .minSpeed =55});
+   convSpeed = 127;
+   outake.move(-127);
+   //chassis.moveToPose()
 }
 
 void middle1() {
